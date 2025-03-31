@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playbook - Sesión 3: Taller Innovación 3D</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            padding: 20px;
+            max-width: 900px;
+            margin: auto;
+        }
+        .header {
+            background-color: #2196F3; /* Blue accent color */
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 1.8em;
+        }
+         .header h2 {
+            margin: 5px 0 0;
+            font-size: 1.2em;
+            font-weight: normal;
+        }
+        .time-title {
+            text-align: center;
+            margin: 15px 0;
+            font-size: 1.1em;
+            color: #333;
+        }
+        .banner {
+            background-color: #2196F3; /* Blue accent color */
+            color: white;
+            padding: 12px 15px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .banner:hover {
+            background-color: #1976D2; /* Darker blue on hover */
+        }
+        .banner .title {
+            font-size: 1.3em;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .banner .subtitle {
+            font-size: 1em;
+            margin-top: 8px;
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
+            padding-top: 8px;
+            font-weight: normal;
+        }
+        .content {
+            display: none;
+            padding: 15px;
+            border: 1px solid #ddd;
+            margin-bottom: 15px;
+            border-radius: 0 0 5px 5px;
+            background-color: #f9f9f9;
+        }
+        .step-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+            text-align: left;
+        }
+        .dialogue {
+            background-color: #e3f2fd; /* Light blue background for dialogue */
+            border: 1px solid #bbdefb; /* Lighter blue border */
+            border-radius: 8px;
+            padding: 12px;
+            margin: 10px 0;
+            text-align: left; /* Adjusted alignment */
+            font-style: normal; /* Removed italics for main dialogue */
+            position: relative;
+        }
+        .dialogue i { /* Style for instructions within dialogue */
+           display: block;
+           margin-top: 8px;
+           color: #555;
+           font-style: italic;
+        }
+        .dropdown {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .dropdown select {
+            font-size: 1em;
+            padding: 8px 12px;
+            margin-left: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            vertical-align: top;
+            text-align: left;
+        }
+         td:first-child {
+            font-weight: bold;
+             width: 40%; /* Adjust width as needed */
+         }
+        ul, ol {
+            margin-left: 20px;
+            padding-left: 15px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        strong {
+             color: #1976D2; /* Darker blue for emphasis */
+        }
+        code {
+            background-color: #eee;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .t-bar-example {
+             border: 1px dashed #999;
+             padding: 10px;
+             margin-top: 10px;
+             background-color: #fff;
+        }
+        .t-bar-example .left { float: left; width: 48%; }
+        .t-bar-example .right { float: right; width: 48%; }
+        .t-bar-example::after { content: ""; display: table; clear: both; } /* Clearfix */
+
+    </style>
+    <script>
+        function updateActivities() {
+            var selectedTime = document.getElementById('time-select').value;
+            var activities = document.getElementsByClassName('activity');
+
+            document.getElementById('selected-time').innerText = "Tiempo efectivo de clase: " + selectedTime + " minutos";
+
+            // Base time is 40 minutes, all activities shown by default.
+            for (var i = 0; i < activities.length; i++) {
+                activities[i].style.display = 'block';
+            }
+
+            // Add logic here if shorter variations are needed in the future
+            /*
+            if (selectedTime === '35') {
+                // Example: Hide or shorten an activity
+            } else if (selectedTime === '30') {
+                 // Example: Hide or shorten multiple activities
+            }
+            */
+        }
+
+        function toggleContent(id) {
+            var content = document.getElementById(id);
+            if (content.style.display === "none" || content.style.display === "") {
+                content.style.display = "block";
+            } else {
+                content.style.display = "none";
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateActivities(); // Call once on load
+             var contents = document.querySelectorAll('.content');
+             contents.forEach(function(content) {
+                 content.style.display = 'none';
+             });
+        });
+    </script>
+</head>
+<body>
+
+<div class="header">
+    <h1>Playbook - Taller: Del Diseño 3D a la Realidad: ¡Imprimiendo el Futuro! (1º Secundaria)</h1>
+    <h2>Sesión 3: Conexión Humana - Dando Alma y Detalle a Nuestros Diseños 3D</h2>
+</div>
+
+<div class="container">
+    <div class="dropdown">
+        <label for="time-select">Tiempo efectivo de Clase:</label>
+        <select id="time-select" onchange="updateActivities()">
+            <option value="40" selected>40 minutos</option>
+            <!-- <option value="35">35 minutos</option> -->
+            <!-- <option value="30">30 minutos</option> -->
+        </select>
+    </div>
+
+    <h2 id="selected-time" class="time-title">Tiempo efectivo de clase: 40 minutos</h2>
+
+<!-- ------------------------------------------------- Espacio para De un Vistazo --------------------------------------------------------- -->
+<div id="activity-0" class="activity">
+    <div class="banner" onclick="toggleContent('de_un_vistazo_s3')">
+        <div class="title">🎯 De un Vistazo y Preparación Previa (Sesión 3) 📋</div>
+        <div class="subtitle">Resumen rápido de la sesión 3 y lo que necesitas preparar.</div>
+    </div>
+    <div id="de_un_vistazo_s3" class="content">
+        <table>
+            <tr>
+                <td>
+                    <strong>Objetivos:</strong>
+                    <ul>
+                        <li>Seleccionar las 2-3 ideas de diseño 3D más prometedoras generadas en la sesión anterior (6-3-5).</li>
+                        <li><strong>Táctica (Implícita - Human Truths):</strong> Conectar la idea seleccionada con necesidades humanas fundamentales para darle profundidad y propósito.</li>
+                        <li><strong>Táctica T-Bar (Adaptado a Diseño 3D):</strong> Describir detalladamente UNA idea de diseño 3D seleccionada (la principal del equipo) usando el formato T-Bar, incluyendo su conexión con las "Human Truths".</li>
+                    </ul>
+                    <strong>Tácticas Principales:</strong> Selección de Ideas, Human Truths (integrada en la justificación del T-Bar), T-Bar (Descripción Detallada).<br><br>
+                    <strong>Entregable Clave:</strong> T-Bar completo por equipo para su idea de diseño 3D principal, incluyendo la conexión con "Human Truths".
+                </td>
+                <td>
+                    <strong>Materiales Específicos:</strong>
+                    <ul>
+                        <li>Proyector o pantalla interactiva.</li>
+                        <li>Presentación de diapositivas (Diapositivas 16-20 detalladas abajo - Nueva numeración).</li>
+                        <li>Acceso a tablero Miro (o similar) con ideas del 6-3-5 y Restricciones 3D visibles, y plantillas T-Bar (digitales o físicas).</li>
+                        <li>Lista/Diapositiva de "Human Truths" (del doc original de Secundaria).</li>
+                        <li>Marcadores, lápices, colores (si usan plantillas físicas T-Bar).</li>
+                        <li>Ejemplo "Casas Impresas 3D" para Human Truths y T-Bar (Diapositivas 18 y 20).</li>
+                    </ul>
+                     <strong>Preparación Previa para ESTA Sesión:</strong>
+                    <ol>
+                        <li><strong>Presentación Lista:</strong> Tener listas las Diapositivas 16 a 20. Preparar los ejemplos de Human Truths y T-Bar de las Casas 3D.</li>
+                        <li><strong>Plantillas T-Bar:</strong> Listas para cada equipo (digitales en Miro o impresas).</li>
+                        <li><strong>Lista Human Truths:</strong> Tener la diapositiva o lista de Human Truths lista para mostrar (la del doc original).</li>
+                        <li><strong>Espacio de Trabajo:</strong> Equipos deben tener acceso a sus ideas del 6-3-5 y Restricciones 3D (idealmente en Miro o notas visibles).</li>
+                    </ol>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<!-- ------------------------------------------------- Espacio para Actividades --------------------------------------------------------- -->
+
+<!-- Actividad 1 -->
+<div id="activity-1" class="activity">
+    <div class="banner" onclick="toggleContent('repaso_conexion_s3')">
+        <div class="title">🔄 Actividad 1: Repaso y Conexión ⏰ Tiempo: 5 minutos</div>
+        <div class="subtitle">Recordar la explosión de ideas y conectar con la selección y profundización de hoy.</div>
+    </div>
+    <div id="repaso_conexion_s3" class="content">
+        <table>
+            <tr>
+                <td><strong>PASO 1 (2 minutos):</strong> Repaso Sesión 2. Proyectar Diapositiva 16.</td>
+                <td class="dialogue">
+                    "¡Qué pasa, diseñadores 3D! ¡De vuelta para la Sesión 3! En la sesión anterior, ¡fue una locura creativa! Primero definieron sus Reglas de Oro con 'Fence the Playground' y luego tuvieron una explosión de ideas con el 6-3-5. ¡Generaron muchísimos conceptos!"
+                    <br><br>
+                    "También añadieron esas Preguntas Poderosas a sus Combinaboards, ¿recuerdan? Empezaron a pensar en si sus ideas eran posibles, si funcionaban y si realmente ayudaban."
+                </td>
+            </tr>
+             <tr>
+                <td><strong>PASO 2 (3 minutos):</strong> Introducción a Sesión 3.</td>
+                <td class="dialogue">
+                     "Hoy vamos a hacer dos cosas importantes con todas esas ideas que generaron:"
+                     <br><br>
+                    "<strong>Primero,</strong> vamos a sumergirnos en esa piscina de ideas y <strong>elegiremos las más fuertes</strong>, las que tienen más potencial, las que más les emocionan."
+                     <br><br>
+                     "<strong>Segundo,</strong> y aquí viene lo interesante, ¡les vamos a dar <strong>'alma'</strong> a esas ideas! Vamos a conectarlas con lo que las personas realmente necesitan en el fondo de su corazón. Y después, las describiremos a fondo, con todo detalle, usando una herramienta genial llamada <strong>T-Bar</strong>. ¡Vamos a darles vida!"
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<!-- Actividad 2 -->
+<div id="activity-2" class="activity">
+    <div class="banner" onclick="toggleContent('seleccion_ideas_s3')">
+        <div class="title">🌟 Actividad 2: Selección de Ideas Prometedoras ⏰ Tiempo: 5 minutos</div>
+        <div class="subtitle">Elegir las 2-3 ideas de diseño 3D con mayor potencial de cada equipo.</div>
+    </div>
+    <div id="seleccion_ideas_s3" class="content">
+        <table>
+            <tr>
+                <td><strong>PASO 1 (4 minutos):</strong> Discusión y Selección en Equipos.</td>
+                <td class="dialogue">
+                    "¡Ok, equipos! Miren todas las ideas que salieron del 6-3-5. Están en sus hojas o en su tablero Miro."
+                    <br><br>
+                    "Ahora, como equipo, discutan rápido: ¿Cuáles de estas ideas les parecen <strong>más prometedoras</strong>? ¿Cuáles tienen más potencial para cumplir su misión ODS y respetar sus 'Reglas de Oro' (restricciones)? ¿Cuáles les dan más 'chispa' creativa?"
+                    <br><br>
+                     "¡Sean críticos pero justos! No tienen que ser perfectas todavía. Elijan las <strong>2 o 3 ideas</strong> que más les gusten, las que sientan que vale la pena explorar más a fondo."
+                     <i>(Dar 3-4 minutos para discutir y seleccionar. Pedir que las marquen claramente en su tablero Miro (ej. con una estrella ⭐ o moviéndolas a una sección llamada 'Ideas Prometedoras') o en sus hojas físicas).</i>
+                </td>
+            </tr>
+             <tr>
+                <td><strong>PASO 2 (1 minuto):</strong> Confirmación de Selección.</td>
+                <td class="dialogue">
+                     "¿Listos? ¿Cada equipo tiene ya sus 2 o 3 ideas finalistas seleccionadas y marcadas?"
+                     <i>(Verificar visualmente o preguntar rápidamente a cada equipo).</i>
+                     "¡Perfecto! Esas son las ideas con las que vamos a trabajar más de cerca ahora."
+                     <br><br>
+                     <i>(Entregable Parcial: 2-3 Ideas Prometedoras seleccionadas por equipo).</i>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<!-- Actividad 3 -->
+<div id="activity-3" class="activity">
+    <div class="banner" onclick="toggleContent('human_truths_s3')">
+        <div class="title">❤️ Actividad 3: Human Truths (Conexión para el T-Bar) ⏰ Tiempo: 5 minutos (Integrado con T-Bar)</div>
+        <div class="subtitle">Conectar la idea principal con necesidades humanas fundamentales antes de detallarla.</div>
+    </div>
+    <div id="human_truths_s3" class="content">
+         <i>Nota: Esta actividad se integra directamente como preparación mental para el T-Bar.</i>
+        <table>
+            <tr>
+                 <td><strong>PASO 1 (2 minutos):</strong> Introducción al Concepto. Proyectar Diapositiva 17 (Título y Contenido).</td>
+                 <td class="dialogue">
+                     "¡Ok, ya tienen sus ideas top! Ahora, antes de describir UNA de ellas a fondo con el T-Bar, vamos a hacer una conexión rápida pero súper importante. Vamos a pensar en el <strong>corazón</strong> ❤️ de su diseño."
+                     <br><br>
+                     "¿Por qué alguien necesitaría o querría <i>realmente</i> su diseño 3D? Más allá de la función básica, ¿qué <strong>necesidad humana profunda</strong> toca? ¿Qué emoción conecta?"
+                 </td>
+            </tr>
+             <tr>
+                <td><strong>PASO 2 (2 minutos):</strong> Explorar la Lista de Human Truths.</td>
+                 <td class="dialogue">
+                     "Miren esta lista de 'Verdades Humanas' (Human Truths). Son cosas que todos, en el fondo, buscamos o sentimos:"
+                     <i>(Mostrar la lista de la Diapositiva 17/Documento Original - resumida aquí):</i>
+                    <ul>
+                        <li><strong>Sentirse Seguro:</strong> ¿Tu idea hace que alguien se sienta más seguro o protegido?</li>
+                        <li><strong>Pertenecer:</strong> ¿Ayuda a sentir que son parte de algo, de un grupo?</li>
+                        <li><strong>Progresar/Crecer:</strong> ¿Ayuda a avanzar, a ser mejor, a aprender?</li>
+                        <li><strong>Expresarse:</strong> ¿Permite mostrar quiénes son, su estilo, su personalidad?</li>
+                        <li><strong>Encontrar Belleza:</strong> ¿Es algo agradable, estético, que da gusto ver o usar?</li>
+                        <li><strong>Ser Autónomo/Decidir:</strong> ¿Da control, opciones, libertad?</li>
+                        <li><strong>Jugar/Diverstirse:</strong> ¿Es lúdico, entretenido?</li>
+                        <li><strong>Ser Reconocido:</strong> ¿Hace sentir valorado, apreciado?</li>
+                         <li><i>(Y otras de la lista completa como 'Amar', 'Evitar la distracción', 'Entender las contradicciones'...)</i></li>
+                    </ul>
+                     "¿Su diseño conecta con alguna de estas verdades? ¿Ayuda a la gente a sentirse más segura? ¿A pertenecer? ¿A progresar? ¿A encontrar belleza?"
+                 </td>
+            </tr>
+             <tr>
+                 <td><strong>PASO 3 (1 minuto):</strong> Selección de Idea Principal y Conexión HT. Proyectar Diapositiva 18 (Ejemplo Casas 3D).</td>
+                <td class="dialogue">
+                    "Ahora, de sus 2-3 ideas prometedoras, elijan <strong>UNA</strong>, la que más les guste para detallar ahora con el T-Bar. Será su idea principal."
+                    <br><br>
+                    "Y piensen rápido: ¿Cuál de estas 'Human Truths' es la que <strong>MÁS</strong> conecta con esa idea en particular? Tengan esa 'verdad humana' en mente, porque la vamos a incluir en el T-Bar."
+                    <br><br>
+                    "Por ejemplo, el equipo de las Casas 3D pensó: 'Nuestras casas no son solo paredes. Tocan la necesidad de <strong>Sentirse Seguro</strong> (protección) y de <strong>Pertenecer</strong> a una comunidad digna'. ¡Esa fue su conexión humana clave!"
+                    <i>(Mostrar brevemente el ejemplo de la Diapositiva 18).</i>
+                 </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<!-- Actividad 4 -->
+<div id="activity-4" class="activity">
+    <div class="banner" onclick="toggleContent('t_bar_s3')">
+        <div class="title">✍️ Actividad 4: Táctica 5: T-Bar - Detallando Nuestro Diseño 3D ⏰ Tiempo: 25 minutos</div>
+        <div class="subtitle">Describir a fondo la idea principal seleccionada usando el formato T-Bar.</div>
+    </div>
+    <div id="t_bar_s3" class="content">
+        <table>
+            <tr>
+                <td><strong>PASO 1 (2 minutos):</strong> Introducir el T-Bar. Proyectar Diapositiva 19 (Instrucciones).</td>
+                <td class="dialogue">
+                    "¡Ahora sí, llegó el momento de darle forma completa a su idea principal! Vamos a usar la Táctica <strong>T-Bar para Diseño 3D</strong>. Es como crear el 'perfil completo' de su idea, asegurándonos de que todos los detalles importantes estén ahí."
+                    <br><br>
+                    "Tomen su plantilla T-Bar, ya sea en Miro o en papel."
+                </td>
+            </tr>
+            <tr>
+                 <td><strong>PASO 2 (3 minutos):</strong> Explicar las Secciones del T-Bar.</td>
+                 <td class="dialogue">
+                    "El T-Bar tiene dos lados:"
+                    <br><br>
+                    "<strong>Lado Izquierdo: ¡El Súper Dibujo!</strong> 🎨 Hagan un boceto claro de cómo se ve su diseño 3D. ¿Tiene partes? ¿Qué forma tiene? ¡Que se entienda visualmente!"
+                    <br><br>
+                     "<strong>Lado Derecho: ¡La Descripción DETALLADA!</strong> 📝 Aquí van los puntos clave:"
+                     <ol>
+                        <li><strong>Título Cool:</strong> ¡Un nombre pegadizo para su diseño!</li>
+                        <li><strong>Qué es:</strong> Una frase clara que lo defina.</li>
+                        <li><strong>Para qué sirve:</strong> ¿Qué problema ODS resuelve? (Conecten con su ODS elegido).</li>
+                        <li><strong>Cómo funciona:</strong> ¿Cómo se usa? ¿Tiene alguna parte especial? ¿Cómo se imprimiría (ideas iniciales)?</li>
+                         <li><strong>A quién ayuda:</strong> ¿Quién es su usuario principal? (Conecten con su Usuario Esencial de 'Fence the Playground').</li>
+                        <li><strong>¡El Corazón! (Human Truth):</strong> ¿Qué necesidad humana importante (la que pensaron antes) ayuda a satisfacer este diseño? ¿Por qué es importante para las personas?</li>
+                    </ol>
+                </td>
+            </tr>
+             <tr>
+                 <td><strong>PASO 3 (18 minutos):</strong> Tiempo de Trabajo en el T-Bar.</td>
+                <td class="dialogue">
+                     "¡Ahora a trabajar en sus T-Bars! Tienen unos 20-23 minutos."
+                    <br><br>
+                     "¡Sean específicos! Usen sus 'Reglas de Oro' (Restricciones) y la 'Human Truth' que identificaron para guiar su descripción. Detallen cada sección."
+                    <br><br>
+                    "En el dibujo, piensen en la forma 3D. En la descripción, conecten todo: el problema, el usuario, la función, los materiales (si ya tienen ideas), y lo más importante, ¡el corazón humano que toca!"
+                    <i>(Este es el paso principal de la sesión. Circular intensamente entre los equipos. Ayudarles a detallar cada sección. Hacer preguntas para profundizar: "¿Cómo se vería exactamente en 3D?", "¿Qué materiales específicos usarías y por qué?", "¿Cómo conecta ESO con sentirse seguro/pertenecer/etc.?", "¿Cómo ayuda ESTO a tu usuario esencial?").</i>
+                </td>
+            </tr>
+             <tr>
+                 <td><strong>PASO 4 (2 minutos):</strong> Ejemplo T-Bar Casas 3D. Proyectar Diapositiva 20.</td>
+                <td class="dialogue">
+                    "Miren el ejemplo completo del T-Bar de 'CasaYA 3D'."
+                     <i>(Mostrar la Diapositiva 20).</i>
+                     "Describe claramente <strong>qué es</strong> (casas innovadoras impresas en 3D), <strong>para qué sirve</strong> (acceso a vivienda digna, resolver falta de vivienda asequible - ODS 11), <strong>cómo funciona</strong> (impresoras gigantes, materiales locales, diseño modular), <strong>a quién ayuda</strong> (familias bajos ingresos, zonas riesgo, necesidad post-desastre), y ¡muy importante!, cómo conecta con las necesidades humanas de <strong>Seguridad</strong> (hogares resistentes) y <strong>Pertenencia</strong> (construir comunidades)."
+                     <br><br>
+                     "¡Así de completo debe quedar su T-Bar!"
+                      <i>(Entregable Clave: T-Bar completo por equipo para su idea de diseño 3D principal (digital o físico)).</i>
+                 </td>
+             </tr>
+        </table>
+    </div>
+</div>
+
+<!-- Actividad 5 -->
+<div id="activity-5" class="activity">
+    <div class="banner" onclick="toggleContent('cierre_s3')">
+        <div class="title">🏁 Actividad 5: Cierre y Preparación para la Próxima Sesión ⏰ Tiempo: 2 minutos</div>
+        <div class="subtitle">Resumir logros y preparar para la fase final de prototipado conceptual y presentación.</div>
+    </div>
+    <div id="cierre_s3" class="content">
+        <table>
+            <tr>
+                <td><strong>PASO 1 (1 minuto):</strong> Resumen de Logros.</td>
+                <td class="dialogue">
+                    "¡Diseñadores 3D con alma, increíble trabajo hoy! Han hecho algo fundamental: seleccionaron su mejor idea y no solo la describieron, sino que la conectaron con el corazón humano a través de su T-Bar. ¡Le han dado profundidad y propósito!"
+                </td>
+            </tr>
+            <tr>
+                 <td><strong>PASO 2 (1 minuto):</strong> Anticipar la Próxima Sesión (Impacto y Lanzamiento).</td>
+                 <td class="dialogue">
+                    "¡Guarden bien esos T-Bars, son casi la versión final de su prototipo conceptual!"
+                    <br><br>
+                    "En la última sesión (Sesión 4), vamos a usar las tácticas finales: contaremos la historia ÉPICA del impacto de su diseño con <strong>'Big Beats'</strong> y planearemos cómo presentarlo al mundo con el <strong>'Lanzamiento Conceptual'</strong>. Además, usaremos <strong>'Like, Wish, Wonder'</strong> para darle un último pulido a sus ideas."
+                    <br><br>
+                    "¡Prepárense para refinar y presentar! ¡Nos vemos en la Sesión 4!"
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+
+<!-- ------------------------------------------------- Fin Espacio para Actividades --------------------------------------------------------- -->
+
+</div>
+
+</body>
+</html>
